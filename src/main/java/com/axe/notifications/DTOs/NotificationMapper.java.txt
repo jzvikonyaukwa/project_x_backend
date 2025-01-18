@@ -1,0 +1,28 @@
+package com.axe.notifications.DTOs;
+
+import org.mapstruct.Context;
+import org.mapstruct.InheritInverseConfiguration;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
+
+import com.axe.common.CycleAvoidingMappingContext;
+import com.axe.notifications.Notification;
+
+@Mapper
+public interface NotificationMapper {
+    NotificationMapper INSTANCE = Mappers.getMapper(NotificationMapper.class);
+
+    @Mapping(target = "description", source = "descriptionText")
+    @Mapping(target = "icon", source = "iconName")
+    @Mapping(target = "image", source = "imageUrl")    
+    @Mapping(target = "link", source = "linkUrl")
+    @Mapping(target = "time", source = "createdAt")
+    @Mapping(target = "title", source = "titleText")
+    NotificationDTO fromNotification(Notification notification, @Context CycleAvoidingMappingContext context);
+
+    @Mapping(target = "acknowledgedAt", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    @InheritInverseConfiguration
+    Notification fromNotificationDTO(NotificationDTO notification, @Context CycleAvoidingMappingContext context);
+}

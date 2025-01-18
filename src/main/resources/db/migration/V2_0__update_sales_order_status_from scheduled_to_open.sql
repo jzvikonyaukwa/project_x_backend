@@ -1,0 +1,1 @@
+UPDATE sale_orders SET status = 'open' WHERE status = 'scheduled';

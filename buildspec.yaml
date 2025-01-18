@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo "Starting pre-build phase..."
+  build:
+    commands:
+      - echo "Starting build phase..."
+      - mvn clean package
+  post_build:
+    commands:
+      - echo "Starting post-build phase..."
+      - cp target/*.jar . # Copy the jar file to the root directory
+
+artifacts:
+  files:
+    - '*.jar' # This will include the JAR file at the root of the ZIP file
+    - '.platform/**/*' # This will include the .platform directory and its contents
+  discard-paths: no # Preserve the directory structure for the .platform configuration
